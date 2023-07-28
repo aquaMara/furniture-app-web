@@ -1,0 +1,15 @@
+.navigator {
+    height: 6vh;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    background-color: #6fbf73;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white;
+    margin-left: 3vw;
+    text-align: center;
+}

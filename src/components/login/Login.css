@@ -1,0 +1,26 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    margin-top: 10vh;
+    text-align: center;
+    color: #6fbf73;
+}
+
+.form {
+    width: 30vw;
+    height: 40vh;
+    margin-top: 10vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    width: 10vw;
+    align-self: center;
+}

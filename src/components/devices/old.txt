@@ -1,0 +1,203 @@
+import React, { useState } from 'react'
+import Box from '@mui/material/Box';
+import { DataGrid, useGridApiRef } from '@mui/x-data-grid';
+import { Button, Stack } from '@mui/material';
+
+const columns = [
+  { 
+    field: 'id',
+    headerName: 'ID',
+    width: 90
+  },
+  {
+    field: 'Name',
+    headerName: 'Имя',
+    width: 150,
+    editable: true,
+  },
+  {
+    field: 'Description',
+    headerName: 'Описание',
+    width: 150,
+    editable: true,
+  },
+  {
+    field: 'DeviceToken',
+    headerName: 'Токен устройства',
+    width: 200,
+    editable: true,
+  },
+  
+  {
+    field: 'DateCreatedUtc',
+    headerName: 'Создание',
+    width: 100,
+  },
+  {
+    field: 'DateStartUtc',
+    headerName: 'Начало',
+    width: 100,
+  },
+  {
+    field: 'DateEndUtc',
+    headerName: 'Окончание',
+    width: 100,
+  },
+  {
+    field: 'Role',
+    headerName: 'Роль',
+    width: 110,
+    editable: true,
+  },
+  {
+    field: 'Company',
+    headerName: 'Компания',
+    type: 'number',
+    width: 150,
+    editable: true,
+  },
+  {
+    field: 'delete',
+    headerName: 'Удалить',
+    width: 100,
+  },
+];
+
+
+export const Devices = () => {
+
+  const apiRef = useGridApiRef();
+
+  const [rows, setRows] = useState([{id: 1, Name: 'Name', Description: 'Description', 'DeviceToken': 'token',
+  DateCreatedUtc: '7.11.2023', DateStartUtc: '7.11.2023', DateEndUtc: '7.11.2023',
+  Role: 'Role', Company: 'Company'},
+  {id: 2, Name: 'Name', Description: 'Description', 'DeviceToken': 'token',
+  DateCreatedUtc: '7.11.2023', DateStartUtc: '7.11.2023', DateEndUtc: '7.11.2023',
+  Role: 'Role', Company: 'Company'},
+  {id: 3, Name: 'Name', Description: 'Description', 'DeviceToken': 'token',
+  DateCreatedUtc: '7.11.2023', DateStartUtc: '7.11.2023', DateEndUtc: '7.11.2023',
+  Role: 'Role', Company: 'Company', delete: 'DELETE'}])
+
+  const handleAddRow = (id) => {
+    console.log(id, 'ghghghh')
+  }
+
+  const handleDeleteRow = (item, str) => {
+    console.log('delete', item.id, str);
+    setRows((prevRows) => {
+      const rowToDeleteIndex = item.id;
+      return [
+        ...rows.slice(0, rowToDeleteIndex),
+        ...rows.slice(rowToDeleteIndex + 1),
+      ];
+    });
+  }
+
+  const onCellEditCommit= (cellData) => {
+    const { id, field, value } = cellData;
+    console.log(cellData)
+}
+
+  const handleUpdateRow = (item) => {
+    const { id, firstName, lastName, age } = item;
+    console.log('ITEM', item)
+    console.log('ITEM', id, firstName, lastName, age)
+  }
+
+  return (
+    rows != null && (
+      <Box sx={{ width: '100%' }}>
+      <Stack direction="row" spacing={1}>
+        <Button size="small" onClick={handleUpdateRow}>
+          Update a row
+        </Button>
+        <Button size="small" onClick={handleDeleteRow}>
+          Delete a row
+        </Button>
+        <Button size="small" onClick={handleAddRow}>
+          Add a row
+        </Button>
+      </Stack>
+    <Box sx={{ height: '90vh', width: '100%' }}>
+      <DataGrid
+      editMode='row'
+        processRowUpdate={(updatedRow, originalRow) =>
+          handleUpdateRow(updatedRow)
+        }
+        onProcessRowUpdateError={handleDeleteRow}
+        onRowClick={console.log('click')}
+        onRowDoubleClick={(item) => handleDeleteRow(item, 'delete')}
+        rows={rows}
+        columns={columns}
+        apiRef={apiRef}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 25,
+            },
+          },
+        }}
+        pageSizeOptions={[25]}
+        checkboxSelection
+        disableRowSelectionOnClick
+      />
+    </Box>
+    </Box>
+    )
+  )
+}
+
+
+<Button variant="standart" sx={sortButton}
+                  onClick={() => sortInc('name')}>
+                  <Typography variant="h8" fontStyle={{textTransform: 'lowercase'}}>i</Typography>
+                </Button>
+                <Button variant="standart"  sx={sortButton}
+                  onClick={() => sortDec('name')}>
+                  <Typography variant="h8" fontStyle={{textTransform: 'lowercase'}}>d</Typography>
+                </Button>
+
+                
+  /*
+  console.log('sort field', field)
+    console.log(rows[1][field])
+    let sortedRows = rows.sort((a,b) => (a[field] > b[field]) ? 1 : ((b[field] > a[field]) ? -1 : 0))
+    
+    console.log(sortedRows, 'sorted');
+    setRows(sortedRows);
+
+    const nextList = [...rows];
+    nextList.reverse();
+    setRows(nextList);
+    */
+
+    const sortButton = {maxWidth: '20px', minWidth: '20px', padding: '0', maxHeight: '60px', minHeight: '60px'}
+
+
+/*
+
+    setRows([{Id: 1, Name: 'Name', Description: '1Description', 'DeviceToken': 'token',
+    DateCreatedUtc: '7.11.2023', DateStartUtc: '7.11.2023', DateEndUtc: '7.11.2023',
+    Role: 'Role', Company: 'Company'},
+    {Id: 2, Name: 'Name', Description: '2Description', 'DeviceToken': 'token',
+    DateCreatedUtc: '7.11.2023', DateStartUtc: '7.11.2023', DateEndUtc: '7.11.2023',
+    Role: 'Role', Company: 'Company'},
+    {Id: 3, Name: 'Name', Description: '3Description3Description3Description3Description 3Description3Description 3Description 3Description3Description', 'DeviceToken': 'token',
+    DateCreatedUtc: '7.11.2023', DateStartUtc: '7.11.2023', DateEndUtc: '7.11.2023',
+    Role: 'Role', Company: 'Company', delete: 'DELETE'}])
+    */
+    
+    const [newName, setNewName] = useState('');
+  const [newDateCreatedUtc, setNewDateCreatedUtc] = useState('');
+  const [newDateStartUtc, setNewDateStartUtc] = useState('');
+  const [newDateEndUtc, setNewDateEndUtc] = useState('');
+  const [newRole, setNewRole] = useState('');
+  const [newCompany, setNewCompany] = useState('');
+  
+  
+  setNewName(row.name);  
+  setNewDateCreatedUtc(row.dateCreatedUtc);
+    setNewDateStartUtc(row.dateStartUtc);
+    setNewDateEndUtc(row.dateEndUtc);
+    setNewRole(row.role);
+    setNewCompany(row.company);
