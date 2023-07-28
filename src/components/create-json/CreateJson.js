@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Typography, Button } from '@mui/material';
-import './CreateJson.css';
+import '../create-json/CreateJson.css';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';

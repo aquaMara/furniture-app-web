@@ -1,6 +1,6 @@
 import { Button, TextField, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import './CreateJson.css';
+import '../create-json/CreateJson.css';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';

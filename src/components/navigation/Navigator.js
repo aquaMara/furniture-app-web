@@ -23,12 +23,7 @@ export const Navigator = () => {
         </Link>
         <Link to='/add-json' className='nav-link'>
           <Typography variant='h6'>
-            Добавить JSON
-          </Typography>
-        </Link>
-        <Link to='/comment-app' className='nav-link'>
-          <Typography variant='h6'>
-            Comment
+            Добавить призвольный JSON
           </Typography>
         </Link>
         <Link to='/upload-app' className='nav-link'>

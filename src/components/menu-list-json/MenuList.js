@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { TextField, Button, Typography } from '@mui/material';
 import { Action } from './Action';
-import useNode from '../../hooks/useNode';
 
 export const MenuList = ({ menuList, handleInsertNode, handleEditNode, handleDeleteNode, handleGetTopNode }) => {
 
@@ -16,7 +15,7 @@ export const MenuList = ({ menuList, handleInsertNode, handleEditNode, handleDel
   }, [editMode]);
 
   const handleNewMenuList = () => {
-    setExpand(!expand);
+    setExpand(true);
     setShowInput(true);
   };
 
@@ -24,7 +23,6 @@ export const MenuList = ({ menuList, handleInsertNode, handleEditNode, handleDel
     if (editMode) {
       handleEditNode(menuList.id, buttonNameRef?.current?.innerText);
     } else {
-      console.log('ggggg')
       setExpand(true);
       handleInsertNode(menuList.id, buttonName);
       setShowInput(false);
@@ -32,6 +30,10 @@ export const MenuList = ({ menuList, handleInsertNode, handleEditNode, handleDel
     }
 
     if (editMode) setEditMode(false);
+  };
+
+  const handleDelete = () => {
+    handleDeleteNode(menuList.id);
   };
 
   const showMenuList = () => {
@@ -51,7 +53,6 @@ export const MenuList = ({ menuList, handleInsertNode, handleEditNode, handleDel
               type='Добавить MenuList'
               handleClick={onAddMenuList}
             />
-            <Button onClick={() => showMenuList()}>jj</Button>
           </>
         ) : (
           <>
@@ -69,38 +70,34 @@ export const MenuList = ({ menuList, handleInsertNode, handleEditNode, handleDel
                 <>
                   <Action
                     className="reply"
-                    type="SAVE"
+                    type='Сохранить'
                     handleClick={onAddMenuList}
                   />
                   <Action
                     className="reply"
-                    type="CANCEL"
+                    type="Отмена"
                     handleClick={() => {
                       if (buttonNameRef.current)
                         buttonNameRef.current.innerText = menuList.buttonName;
                       setEditMode(false);
                     }}
                   />
+                  <Action
+                    className="reply"
+                    type="Удалить"
+                    handleClick={handleDelete}
+                  />
                 </>
               ) : (
                 <>
                   <Action
                     className="reply"
-                    type={
-                      <>
-                        {expand ? (
-                          <Typography>up</Typography>
-                        ) : (
-                          <Typography>down</Typography>
-                        )}{" "}
-                        REPLY
-                      </>
-                    }
+                    type='Добавить'
                     handleClick={handleNewMenuList}
                   />
                   <Action
                     className="reply"
-                    type="EDIT"
+                    type="Изменить"
                     handleClick={() => {
                       setEditMode(true);
                     }}
@@ -118,10 +115,10 @@ export const MenuList = ({ menuList, handleInsertNode, handleEditNode, handleDel
             <TextField id="standard-basic" variant="standard" className='json-input'
               name='buttonName' label='Введите buttonName' required={true}
               onChange={(e) => setButtonName(e.target.value)} value={buttonName} />
-            <Action className="reply" type="REPLY" handleClick={onAddMenuList} />
+            <Action className="reply" type="Добавить" handleClick={onAddMenuList} />
             <Action
               className="reply"
-              type="CANCEL"
+              type="Отмена"
               handleClick={() => {
                 setShowInput(false);
                 if (!menuList?.menuList?.length) setExpand(false);

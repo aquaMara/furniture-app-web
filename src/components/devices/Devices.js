@@ -92,7 +92,7 @@ export const Devices = () => {
                 </IconButton>
               </th>
               <th>
-                <Typography variant="h8" fontStyle={{textTransform: 'lowercase'}}>deviceToken</Typography>
+                <Typography variant="h8" fontStyle={{textTransform: 'lowercase'}}>licenseKey</Typography>
                 <IconButton aria-label="sort ascending" onClick={() => sortInc('deviceToken')}>
                   <ArrowUpwardIcon />
                 </IconButton>

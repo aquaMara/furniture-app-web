@@ -57,12 +57,16 @@
 
 .button-container {
     width: 30vw;
-    height: 30vh;
+    height: 40vh;
     position: fixed;
     float: right;
     margin-left: 70vw;
     display: flex;
     flex-direction: column;
+    border: 1px dotted #6fbf73;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .json-outer, .json-inner {

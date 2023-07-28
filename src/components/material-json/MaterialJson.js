@@ -1,6 +1,6 @@
 import { Button, TextField, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import './CreateJson.css';
+import '../create-json/CreateJson.css';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -108,6 +108,12 @@ export const MaterialJson = () => {
         })
         .catch( (e) => { console.log("getUsers error ", e) } );
     }
+
+    const preview = () => {
+        const structure = { catalogs };
+        var json = JSON.stringify(structure);
+        alert(json);
+      }
     
     const handleSaveMaterialJson = async () => {
         var newObj = { catalogs };
@@ -119,7 +125,10 @@ export const MaterialJson = () => {
         .then((res) => {
           console.log('handleSaveMaterialJson', res.data);     
         })
-        .catch( (e) => { console.log('handleSaveMaterialJson error', e) } );
+        .catch(e => { 
+            console.log('handleSaveMaterialJson error', e);
+            alert(JSON.stringify(e.response.data.message))
+        });
     }
 
   return (
@@ -190,6 +199,10 @@ export const MaterialJson = () => {
           )}
           </Select>
         </FormControl> }
+        <Button className='save-button'
+          variant="outlined" onClick={() => preview()}>
+          Превью Material JSON
+        </Button>
         <Button className='save-button' disabled={disabledCondition}
           variant="outlined" onClick={() => handleSaveMaterialJson()}>
           Отправить Material JSON
