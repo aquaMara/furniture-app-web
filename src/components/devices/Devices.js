@@ -3,7 +3,7 @@ import './Devices.css';
 import { Button, Typography, IconButton } from '@mui/material';
 import { AddUser } from './AddUser';
 import { EditUser } from './EditUser';
-import axios, { axiosPrivate } from '../../security/axios';
+import axios, { axiosPrivate } from '../../api/axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -25,7 +25,7 @@ export const Devices = () => {
 
   const handleDeleteRow = async (id) => {
     console.log('handleDeleteRow', id);
-    await axios.delete(`/Users/${id}`)
+    await axiosPrivate.delete(`/Users/${id}`)
     .then((res) => {
       console.log("handleDeleteRow", res.data);
       getUsers();
@@ -39,7 +39,7 @@ export const Devices = () => {
   }
 
   const getUsers = async () => {
-    await axios.get('/Users')
+    await axiosPrivate.get('/Users')
     .then((res) => {
       console.log('getUsers', res.data)
       setRows(res.data);      

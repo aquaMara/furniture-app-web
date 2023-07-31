@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axios from '../../security/axios';
+import axios, { axiosPrivate } from '../../api/axios';
 
 
 export const CreateJson = () => {
@@ -24,9 +24,8 @@ export const CreateJson = () => {
   }, []);
 
   const getUsers = async () => {
-    await axios.get('/Users')
+    await axiosPrivate.get('/Users')
     .then((res) => {
-      console.log('getUsers', res.data)
       setUsers(res.data);      
     })
     .catch( (e) => { console.log("getUsers error ", e) } );
@@ -34,22 +33,43 @@ export const CreateJson = () => {
 
   const handleSaveMaterialJson = async () => {
     console.log('handleSaveMaterialJson', json, userId);
-    axios.put(`/UserAdministration/Material/${userId}`, null, { params: {
+    axiosPrivate.put(`/UserAdministration/Material/${userId}`, null, { params: {
       jsonMaterial: json
     }})
     .then((res) => {
       console.log('handleSaveMaterialJson', res.data);     
     })
-    .catch( (e) => { console.log('handleSaveMaterialJson error', e) } );
+    .catch(e => { 
+      console.log('handleSaveMaterialJson error', e);
+      alert(JSON.stringify(e.response.data.message))
+    });
   }
 
   const handleSaveMenuJson = async () => {
     console.log('handleSaveMenuJson', json, userId);
-    await axios.put(`/UserAdministration/Menu/${userId}`, null, { params: {  jsonMenu: json } })
+    await axiosPrivate.put(`/UserAdministration/Menu/${userId}`, null, { params: {  jsonMenu: json } })
     .then((res) => {
       console.log('handleSaveMenuJson', res.data);     
     })
-    .catch( (e) => { console.log('handleSaveMenuJson error', e) } );
+    .catch(e => { 
+      console.log('handleSaveMenuJson error', e);
+      alert(JSON.stringify(e.response.data.message))
+    });
+  }
+
+  const handleSaveBundleJson = () => {
+    console.log('handleSaveBundleJson', json, userId);
+    axiosPrivate.put(`/UserAdministration/Bundle/${userId}`, null, { params: {
+      jsonBundle: json
+    }})
+    .then((res) => {
+      console.log('handleSaveBundleJson', res.data);
+      alert('Sucess');
+    })
+    .catch(e => { 
+        console.log('handleSaveBundleJson error', e);
+        alert(JSON.stringify(e.response.data.message))
+    });
   }
 
   return (
@@ -82,6 +102,10 @@ export const CreateJson = () => {
         <Button className='save-button' disabled={disabledCondition}
           variant="outlined" onClick={() => handleSaveMenuJson()}>
           Отправить Menu JSON
+        </Button>
+        <Button className='save-button' disabled={disabledCondition}
+          variant="outlined" onClick={() => handleSaveBundleJson()}>
+          Отправить Bundle JSON
         </Button>
       </div>
       <TextareaAutosize className='textarea' value={json} minRows={12}

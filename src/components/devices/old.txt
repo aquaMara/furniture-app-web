@@ -201,3 +201,9 @@ export const Devices = () => {
     setNewDateEndUtc(row.dateEndUtc);
     setNewRole(row.role);
     setNewCompany(row.company);
+
+    const [bundleName, setBundleName] = useState('');
+    const [bundleUrl, setBundleUrl] = useState('');
+    const [hashFileName, setHashFileName] = useState('');
+    const [hashFileUrl, setHashFileUrl] = useState('');
+    

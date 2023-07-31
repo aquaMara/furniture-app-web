@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Devices.css';
 import { TextField, Button } from '@mui/material';
-import axios from '../../security/axios';
+import axios, { axiosPrivate } from '../../api/axios';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -24,7 +24,7 @@ export const AddUser = ({setAddUserVisible, getUsers}) => {
     }, []);
 
     const getCompanies = async () => {
-      await axios.get('/Users/Company')
+      await axiosPrivate.get('/Users/Company')
       .then((res) => {
         console.log("getCompanies", res.data)
         setCompanies(res.data);      
@@ -37,7 +37,7 @@ export const AddUser = ({setAddUserVisible, getUsers}) => {
         email: 'email', gender: 2, password: 'password',
         name: name, companyName: company,
         description: description, deviceToken: deviceToken};
-      await axios.post('/Users', addUser)
+      await axiosPrivate.post('/Users', addUser)
       .then((res) => {
         console.log("handleAddRow", res.data);      
       })

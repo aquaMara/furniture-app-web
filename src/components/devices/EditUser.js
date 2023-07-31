@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Devices.css';
 import { TextField, Button, Typography, Modal, Box } from '@mui/material';
-import axios from '../../security/axios';
+import axios, { axiosPrivate } from '../../api/axios';
 
 export const EditUser = ({editUserVisible, setEditUserVisible, row, setEditableItem, getUsers}) => {
 
@@ -20,7 +20,7 @@ export const EditUser = ({editUserVisible, setEditUserVisible, row, setEditableI
     description: newDescription,
     deviceToken: newDeviceToken,
     numberOfLicenseDays: numberOfLicenseDays};
-    await axios.put(`/Users/${row.id}`, editUser)
+    await axiosPrivate.put(`/Users/${row.id}`, editUser)
     .then((res) => {
       console.log('handleEditRow', res.data);      
     })

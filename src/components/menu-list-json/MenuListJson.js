@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axios from '../../security/axios';
+import axios, { axiosPrivate } from '../../api/axios';
 
 const menuList = {
   id: 1,
@@ -19,7 +19,6 @@ export const MenuListJson = () => {
   const [menuListData, setMenuListData] = useState(menuList);
   const [userId, setUserId] = useState('');
   const [users, setUsers] = useState(null);
-  const [json, setJson] = useState('');
 
   const disabledCondition = userId === null || userId === '';
 
@@ -30,7 +29,7 @@ export const MenuListJson = () => {
   }, []);
 
   const getUsers = async () => {
-    await axios.get('/Users')
+    await axiosPrivate.get('/Users')
     .then((res) => {
       console.log('getUsers', res.data)
       setUsers(res.data);      
@@ -71,11 +70,12 @@ export const MenuListJson = () => {
     const structure = getTopNode(menuListData);
     var json = JSON.stringify(structure);
     console.log('handleSaveMenuJson', userId);
-    axios.put(`/UserAdministration/Menu/${userId}`, null, { params: {
+    axiosPrivate.put(`/UserAdministration/Menu/${userId}`, null, { params: {
       jsonMenu: json
     }})
     .then((res) => {
-      console.log('handleSaveMaterialJson', res.data);     
+      console.log('handleSaveMaterialJson', res.data);
+      alert('Sucess');    
     })
     .catch(e => { 
       console.log('handleSaveMenuJson error', e);

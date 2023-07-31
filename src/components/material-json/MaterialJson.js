@@ -1,12 +1,11 @@
 import { Button, TextField, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import '../create-json/CreateJson.css';
-import TextareaAutosize from '@mui/base/TextareaAutosize';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axios from '../../security/axios';
+import axios, { axiosPrivate } from '../../api/axios';
 
 export const MaterialJson = () => {
 
@@ -101,7 +100,7 @@ export const MaterialJson = () => {
     }, []);
     
     const getUsers = async () => {
-        await axios.get('/Users')
+        await axiosPrivate.get('/Users')
         .then((res) => {
           console.log('getUsers', res.data)
           setUsers(res.data);      
@@ -113,17 +112,18 @@ export const MaterialJson = () => {
         const structure = { catalogs };
         var json = JSON.stringify(structure);
         alert(json);
-      }
+    }
     
     const handleSaveMaterialJson = async () => {
         var newObj = { catalogs };
         var json = JSON.stringify(newObj);
         console.log('handleSaveMaterialJson', JSON.stringify(newObj), userId);
-        axios.put(`/UserAdministration/Material/${userId}`, null, { params: {
+        axiosPrivate.put(`/UserAdministration/Material/${userId}`, null, { params: {
           jsonMaterial: json
         }})
         .then((res) => {
-          console.log('handleSaveMaterialJson', res.data);     
+          console.log('handleSaveMaterialJson', res.data);
+          alert('Sucess');   
         })
         .catch(e => { 
             console.log('handleSaveMaterialJson error', e);

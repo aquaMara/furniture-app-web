@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Devices.css';
 import { TextField, Button } from '@mui/material';
-import axios from '../../security/axios';
+import axios, { axiosPrivate } from '../../api/axios';
 
 export const AddCompany = ({setAddCompanyVisible}) => {
 
@@ -15,7 +15,7 @@ export const AddCompany = ({setAddCompanyVisible}) => {
         company: company
       }
       console.log('handleAddRow', newCompany)
-      await axios.post('/Users/Company', newCompany)
+      await axiosPrivate.post('/Users/Company', newCompany)
       .then((res) => {
         console.log("getUsers", res.data);    
       })

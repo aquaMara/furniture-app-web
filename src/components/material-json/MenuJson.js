@@ -5,7 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axios from '../../security/axios';
+import axios, { axiosPrivate } from '../../api/axios';
 
 export const MenuJson = () => {
 
@@ -19,7 +19,6 @@ export const MenuJson = () => {
 
   const [userId, setUserId] = useState('');
   const [users, setUsers] = useState(null);
-  const [json, setJson] = useState('');
 
   const disabledCondition = userId === null || userId === '';
 
@@ -43,23 +42,6 @@ export const MenuJson = () => {
       }
     ];
     console.log(menuLists);
-      /*
-      setCatalogs([...catalogs, { FactoryId: '', ModelName: '', PathToModelSprite: '', list: [
-          {
-              SpritePath: '',
-              Width: '',
-              Length: '',
-              ModelName: '',
-              ModelPath: '',
-              Id: ''
-          }
-      ]}]);
-      console.log(catalogs);
-      */
-  }
-
-  const showLst = () => {
-    
   }
 
   const showLists = () => {
@@ -93,7 +75,7 @@ export const MenuJson = () => {
   }, []);
 
   const getUsers = async () => {
-      await axios.get('/Users')
+      await axiosPrivate.get('/Users')
       .then((res) => {
         console.log('getUsers', res.data)
         setUsers(res.data);      
@@ -105,7 +87,7 @@ export const MenuJson = () => {
       var newObj = {  };
       var json = JSON.stringify(newObj);
       console.log('handleSaveMaterialJson', JSON.stringify(newObj), userId);
-      axios.put(`/UserAdministration/Material/${userId}`, null, { params: {
+      axiosPrivate.put(`/UserAdministration/Material/${userId}`, null, { params: {
         jsonMaterial: json
       }})
       .then((res) => {
