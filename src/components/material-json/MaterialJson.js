@@ -5,7 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axios, { axiosPrivate } from '../../api/axios';
+import useAxiosPrivate from '../../context/useAxiosPrivate';
 
 export const MaterialJson = () => {
 
@@ -29,12 +29,11 @@ export const MaterialJson = () => {
 
     const [userId, setUserId] = useState('');
     const [users, setUsers] = useState(null);
-    const [json, setJson] = useState('');
+    const axiosPrivate = useAxiosPrivate();
 
     const disabledCondition = userId === null || userId === '';
 
     const handleCatalogInputChange = (e, index)=>{
-        console.log(index, e.target.name, e.target.value);
         const {name, value}= e.target;
         const list = [...catalogs];
         list[index][name]= value;
@@ -42,12 +41,9 @@ export const MaterialJson = () => {
     }
 
     const handleListInputChange = (e, index, id) => {
-        console.log(index, id, e.target.name, e.target.value);
         const {name, value}= e.target;
         const arr = [...catalogs];
-        console.log(arr[index], 'arr[index]');
         const arr2 = arr[index].list[id];
-        console.log(arr2, 'arr2');
         arr[index].list[id][name] = value;
         setCatalogs(arr);
     }
@@ -69,13 +65,10 @@ export const MaterialJson = () => {
                 Id: ''
             }
         ]}]);
-        console.log(catalogs);
     }
 
     const handleListAdd = (index) => {
-        console.log('handleListAdd');
         const arr = [...catalogs];
-        console.log(arr[index], 'arr[index]', index);
         const arr2 = arr[index].list;
         arr2.push({
             SpritePath: '',
@@ -85,14 +78,7 @@ export const MaterialJson = () => {
             ModelPath: '',
             Id: ''
         });
-        console.log('arr2', arr2);
         setCatalogs(arr);
-    }
-
-    const handleSubmit = () => {
-        var newObj = { catalogs };
-        console.log(newObj);
-        console.log(JSON.stringify(newObj))
     }
 
     useEffect(() => {
@@ -102,7 +88,6 @@ export const MaterialJson = () => {
     const getUsers = async () => {
         await axiosPrivate.get('/Users')
         .then((res) => {
-          console.log('getUsers', res.data)
           setUsers(res.data);      
         })
         .catch( (e) => { console.log("getUsers error ", e) } );
@@ -117,16 +102,13 @@ export const MaterialJson = () => {
     const handleSaveMaterialJson = async () => {
         var newObj = { catalogs };
         var json = JSON.stringify(newObj);
-        console.log('handleSaveMaterialJson', JSON.stringify(newObj), userId);
         axiosPrivate.put(`/UserAdministration/Material/${userId}`, null, { params: {
           jsonMaterial: json
         }})
         .then((res) => {
-          console.log('handleSaveMaterialJson', res.data);
           alert('Sucess');   
         })
-        .catch(e => { 
-            console.log('handleSaveMaterialJson error', e);
+        .catch(e => {
             alert(JSON.stringify(e.response.data.message))
         });
     }

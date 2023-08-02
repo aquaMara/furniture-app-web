@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './Devices.css';
 import { TextField, Button, Typography, Modal, Box } from '@mui/material';
-import axios, { axiosPrivate } from '../../api/axios';
+import useAxiosPrivate from '../../context/useAxiosPrivate';
 
 export const EditUser = ({editUserVisible, setEditUserVisible, row, setEditableItem, getUsers}) => {
 
   const [newDescription, setNewDescription] = useState('');
   const [newDeviceToken, setNewDeviceToken] = useState('');
   const [numberOfLicenseDays, setNumberOfLicenseDays] = useState('');
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     setNewDescription(row.description);
@@ -22,7 +23,7 @@ export const EditUser = ({editUserVisible, setEditUserVisible, row, setEditableI
     numberOfLicenseDays: numberOfLicenseDays};
     await axiosPrivate.put(`/Users/${row.id}`, editUser)
     .then((res) => {
-      console.log('handleEditRow', res.data);      
+      // console.log('handleEditRow', res.data);      
     })
     .catch( (e) => { console.log('handleEditRow error', e) } );
     handleClose();

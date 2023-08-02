@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axios, { axiosPrivate } from '../../api/axios';
+import useAxiosPrivate from '../../context/useAxiosPrivate';
 
 
 export const CreateJson = () => {
@@ -15,6 +15,7 @@ export const CreateJson = () => {
   const [userId, setUserId] = useState('');
   const [users, setUsers] = useState(null);
   const [json, setJson] = useState('');
+  const axiosPrivate = useAxiosPrivate();
 
   const disabledCondition = json === null || json.trim() === ''
     || userId === null || userId === '';
@@ -32,43 +33,36 @@ export const CreateJson = () => {
   }
 
   const handleSaveMaterialJson = async () => {
-    console.log('handleSaveMaterialJson', json, userId);
     axiosPrivate.put(`/UserAdministration/Material/${userId}`, null, { params: {
       jsonMaterial: json
     }})
     .then((res) => {
-      console.log('handleSaveMaterialJson', res.data);     
+      alert('Sucess');    
     })
     .catch(e => { 
-      console.log('handleSaveMaterialJson error', e);
       alert(JSON.stringify(e.response.data.message))
     });
   }
 
   const handleSaveMenuJson = async () => {
-    console.log('handleSaveMenuJson', json, userId);
     await axiosPrivate.put(`/UserAdministration/Menu/${userId}`, null, { params: {  jsonMenu: json } })
     .then((res) => {
-      console.log('handleSaveMenuJson', res.data);     
+      alert('Sucess');   
     })
-    .catch(e => { 
-      console.log('handleSaveMenuJson error', e);
+    .catch(e => {
       alert(JSON.stringify(e.response.data.message))
     });
   }
 
   const handleSaveBundleJson = () => {
-    console.log('handleSaveBundleJson', json, userId);
     axiosPrivate.put(`/UserAdministration/Bundle/${userId}`, null, { params: {
       jsonBundle: json
     }})
     .then((res) => {
-      console.log('handleSaveBundleJson', res.data);
       alert('Sucess');
     })
     .catch(e => { 
-        console.log('handleSaveBundleJson error', e);
-        alert(JSON.stringify(e.response.data.message))
+      alert(JSON.stringify(e.response.data.message))
     });
   }
 

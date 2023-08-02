@@ -11,7 +11,6 @@ export const AuthProvider = ({ children }) => {
         {auth, setAuth}
     }>
         {children}
-        {console.log("auth in AuthContext", auth)}
     </AuthContext.Provider>
   )
 }

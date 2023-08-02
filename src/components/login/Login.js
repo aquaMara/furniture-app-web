@@ -24,7 +24,6 @@ export const Login = () => {
 
       await axios.post('/Users/authenticate', user)
         .then((res) => {
-          console.log("handleLogin", res.data);
           setAuth(res.data);
           navigate('/');
         })

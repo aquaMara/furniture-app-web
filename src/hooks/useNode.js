@@ -6,19 +6,15 @@ const useNode = () => {
 
     const insertNode = function (tree, menuListId, item) {
       if (tree.id === menuListId) {
-        console.log('1', tree, menuListId, item)
         tree.menuList.push({
           id: new Date().getTime(),
           buttonName: item,
           menuList: [],
         });
-
-        console.log('11', tree, menuListId, item)
         return tree;
       }
   
       let latestNode = [];
-      console.log('2')
       latestNode = tree.menuList.map((ob) => {
         return insertNode(ob, menuListId, item);
       });
@@ -40,7 +36,6 @@ const useNode = () => {
     };
   
     const deleteNode = (tree, id) => {
-        console.log('del 2')
       for (let i = 0; i < tree.menuList.length; i++) {
         const currentItem = tree.menuList[i];
         if (currentItem.id === id) {

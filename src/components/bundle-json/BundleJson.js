@@ -5,10 +5,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axios, { axiosPrivate } from '../../api/axios';
+import useAxiosPrivate from '../../context/useAxiosPrivate';
 
 export const BundleJson = () => {
 
+    const axiosPrivate = useAxiosPrivate();
     const [userId, setUserId] = useState('');
     const [users, setUsers] = useState(null);
     const [bundles, setBundles] = useState([

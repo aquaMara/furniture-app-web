@@ -5,7 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axios, { axiosPrivate } from '../../api/axios';
+import useAxiosPrivate from '../../context/useAxiosPrivate';
 
 export const MenuJson = () => {
 
@@ -19,11 +19,11 @@ export const MenuJson = () => {
 
   const [userId, setUserId] = useState('');
   const [users, setUsers] = useState(null);
+  const axiosPrivate = useAxiosPrivate();
 
   const disabledCondition = userId === null || userId === '';
 
   const handleInputChange = (e, index)=>{
-      console.log(index, e.target.name, e.target.value);
       const {name, value}= e.target;
       const list = [...menuLists];
       list[index][name]= value;
@@ -32,8 +32,6 @@ export const MenuJson = () => {
   }
 
   const handleAdd = (index, id) => {
-    console.log(index, 'index', id, 'id');
-    console.log(menuLists[index])
     menuLists[index].menuList = [
       {
           buttonName: '',
@@ -41,7 +39,6 @@ export const MenuJson = () => {
           menuList: []
       }
     ];
-    console.log(menuLists);
   }
 
   const showLists = () => {
@@ -77,7 +74,6 @@ export const MenuJson = () => {
   const getUsers = async () => {
       await axiosPrivate.get('/Users')
       .then((res) => {
-        console.log('getUsers', res.data)
         setUsers(res.data);      
       })
       .catch( (e) => { console.log("getUsers error ", e) } );
@@ -86,12 +82,11 @@ export const MenuJson = () => {
   const handleSaveMaterialJson = async () => {
       var newObj = {  };
       var json = JSON.stringify(newObj);
-      console.log('handleSaveMaterialJson', JSON.stringify(newObj), userId);
       axiosPrivate.put(`/UserAdministration/Material/${userId}`, null, { params: {
         jsonMaterial: json
       }})
       .then((res) => {
-        console.log('handleSaveMaterialJson', res.data);     
+        alert('Sucess');   
       })
       .catch( (e) => { console.log('handleSaveMaterialJson error', e) } );
   }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Devices.css';
 import { TextField, Button } from '@mui/material';
-import axios, { axiosPrivate } from '../../api/axios';
+import useAxiosPrivate from '../../context/useAxiosPrivate';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -13,6 +13,7 @@ export const AddUser = ({setAddUserVisible, getUsers}) => {
     const [company, setCompany] = useState('');
     const [description, setDescription] = useState('');
     const [deviceToken, setDeviceToken] = useState('');
+    const axiosPrivate = useAxiosPrivate();
 
     const [companies, setCompanies] = useState(null);
 
@@ -26,7 +27,6 @@ export const AddUser = ({setAddUserVisible, getUsers}) => {
     const getCompanies = async () => {
       await axiosPrivate.get('/Users/Company')
       .then((res) => {
-        console.log("getCompanies", res.data)
         setCompanies(res.data);      
       })
       .catch( (e) => { console.log("getCompanies error ", e) } );
@@ -39,7 +39,7 @@ export const AddUser = ({setAddUserVisible, getUsers}) => {
         description: description, deviceToken: deviceToken};
       await axiosPrivate.post('/Users', addUser)
       .then((res) => {
-        console.log("handleAddRow", res.data);      
+        // console.log("handleAddRow", res.data);      
       })
       .catch( (e) => { console.log("handleAddRow error ", e) } );
       setAddUserVisible(false);

@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axios, { axiosPrivate } from '../../api/axios';
+import useAxiosPrivate from '../../context/useAxiosPrivate';
 
 const menuList = {
   id: 1,
@@ -19,6 +19,7 @@ export const MenuListJson = () => {
   const [menuListData, setMenuListData] = useState(menuList);
   const [userId, setUserId] = useState('');
   const [users, setUsers] = useState(null);
+  const axiosPrivate = useAxiosPrivate();
 
   const disabledCondition = userId === null || userId === '';
 
@@ -31,7 +32,6 @@ export const MenuListJson = () => {
   const getUsers = async () => {
     await axiosPrivate.get('/Users')
     .then((res) => {
-      console.log('getUsers', res.data)
       setUsers(res.data);      
     })
     .catch( (e) => { console.log("getUsers error ", e) } );
@@ -39,11 +39,9 @@ export const MenuListJson = () => {
 
   const handleGetTopNode = () => {
     const structure = getTopNode(menuListData);
-    console.log(JSON.stringify(structure));
   }
 
   const handleInsertNode = (folderId, item) => {
-    console.log('hello', menuListData, folderId, item, JSON.stringify(menuListData));
     const finalStructure = insertNode(menuListData, folderId, item);
     setMenuListData(finalStructure);
   }
@@ -54,7 +52,6 @@ export const MenuListJson = () => {
   }
 
   const handleDeleteNode = (folderId) => {
-    console.log('del')
     const finalStructure = deleteNode(menuListData, folderId);
     const temp = { ... finalStructure };
     setMenuListData(temp);
@@ -69,16 +66,13 @@ export const MenuListJson = () => {
   const handleSaveMenuJson = async () => {
     const structure = getTopNode(menuListData);
     var json = JSON.stringify(structure);
-    console.log('handleSaveMenuJson', userId);
     axiosPrivate.put(`/UserAdministration/Menu/${userId}`, null, { params: {
       jsonMenu: json
     }})
     .then((res) => {
-      console.log('handleSaveMaterialJson', res.data);
       alert('Sucess');    
     })
-    .catch(e => { 
-      console.log('handleSaveMenuJson error', e);
+    .catch(e => {
       alert(JSON.stringify(e.response.data.message))
   });
   }

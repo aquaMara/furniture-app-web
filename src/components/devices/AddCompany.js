@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './Devices.css';
 import { TextField, Button } from '@mui/material';
-import axios, { axiosPrivate } from '../../api/axios';
+import useAxiosPrivate from '../../context/useAxiosPrivate';
 
 export const AddCompany = ({setAddCompanyVisible}) => {
 
     const [company, setCompany] = useState('');
+    const axiosPrivate = useAxiosPrivate();
     
     const disabledCondition = company === null || company.trim() === '';
 
@@ -14,10 +15,9 @@ export const AddCompany = ({setAddCompanyVisible}) => {
         companyType: 'companyType',
         company: company
       }
-      console.log('handleAddRow', newCompany)
       await axiosPrivate.post('/Users/Company', newCompany)
       .then((res) => {
-        console.log("getUsers", res.data);    
+        // console.log("getUsers", res.data);    
       })
       .catch( (e) => { console.log("getUsers error ", e) } );
       setAddCompanyVisible(false);

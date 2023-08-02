@@ -3,13 +3,13 @@ import './Devices.css';
 import { Button, Typography, IconButton } from '@mui/material';
 import { AddUser } from './AddUser';
 import { EditUser } from './EditUser';
-import axios, { axiosPrivate } from '../../api/axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { AddCompany } from './AddCompany';
+import useAxiosPrivate from '../../context/useAxiosPrivate';
 
 export const Devices = () => {
 
@@ -18,16 +18,15 @@ export const Devices = () => {
   const [addCompanyVisible, setAddCompanyVisible] = useState(false);
   const [editUserVisible, setEditUserVisible] = useState(false);
   const [editableItem, setEditableItem] = useState(null);
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     getUsers();
   }, []);
 
   const handleDeleteRow = async (id) => {
-    console.log('handleDeleteRow', id);
     await axiosPrivate.delete(`/Users/${id}`)
     .then((res) => {
-      console.log("handleDeleteRow", res.data);
       getUsers();
     })
     .catch( (e) => { console.log("handleDeleteRow error ", e) } );
@@ -41,7 +40,6 @@ export const Devices = () => {
   const getUsers = async () => {
     await axiosPrivate.get('/Users')
     .then((res) => {
-      console.log('getUsers', res.data)
       setRows(res.data);      
     })
     .catch( (e) => { console.log("getUsers error ", e) } );
