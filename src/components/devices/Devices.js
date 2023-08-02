@@ -29,7 +29,9 @@ export const Devices = () => {
     .then((res) => {
       getUsers();
     })
-    .catch( (e) => { console.log("handleDeleteRow error ", e) } );
+    .catch(e => {
+      alert(JSON.stringify(e.response.data.message));
+    });
   }
 
   const handleEditUserVisible = (row) => {
@@ -43,6 +45,11 @@ export const Devices = () => {
       setRows(res.data);      
     })
     .catch( (e) => { console.log("getUsers error ", e) } );
+  }
+
+  const createDate = (date1) => {
+    let date = new Date(date1);    
+    return date.getFullYear() + '-'+ (date.getMonth() + 1) +'-' + date.getDate();
   }
 
   const sortInc = (field) => {
@@ -158,9 +165,8 @@ export const Devices = () => {
             <td>{row.name}</td>
             <td>{row.description}</td>
             <td>{row.deviceToken}</td>
-            <td>{row.dateCreatedUtc}</td>
-            <td>{row.dateStartUtc}</td>
-            <td>{row.dateEndUtc}</td>
+            <td>{createDate(row.dateStartUtc)}</td>
+            <td>{createDate(row.dateEndUtc)}</td>
             <td>{row.role}</td>
             <td>{row.company}</td>
             <td>

@@ -19,20 +19,26 @@ export const EditUser = ({editUserVisible, setEditUserVisible, row, setEditableI
     const editUser = {
     id: row.id, email: 'email',
     description: newDescription,
-    deviceToken: newDeviceToken,
-    numberOfLicenseDays: numberOfLicenseDays};
+    deviceToken: newDeviceToken === '' ? null : newDeviceToken,
+    numberOfLicenseDays: +numberOfLicenseDays};
     await axiosPrivate.put(`/Users/${row.id}`, editUser)
     .then((res) => {
-      // console.log('handleEditRow', res.data);      
+      handleClose();
+      getUsers();
     })
-    .catch( (e) => { console.log('handleEditRow error', e) } );
-    handleClose();
-    getUsers();
+    .catch(e => {
+      alert(JSON.stringify(e.response.data.message));
+    });
   }
 
   const handleClose = () => {
     setEditUserVisible(false);
     setEditableItem(null);
+  }
+
+  const createDate = (date1) => {
+    let date = new Date(date1);    
+    return date.getFullYear() + '-'+ (date.getMonth() + 1) +'-' + date.getDate();
   }
 
   return (
@@ -53,11 +59,11 @@ export const EditUser = ({editUserVisible, setEditUserVisible, row, setEditableI
               InputProps={{readOnly: true}} />
             <TextField disabled className='add-input' variant="standard" label='company' value={row.company} style={{marginBottom: '20px', width: '15%'}}
               InputProps={{readOnly: true}} />
-            <TextField disabled className='add-input' variant="standard" label='dateCreatedUtc' value={row.dateCreatedUtc} style={{marginBottom: '20px', width: '15%'}}
+            <TextField disabled className='add-input' variant="standard" label='dateCreatedUtc' value={createDate(row.dateCreatedUtc)} style={{marginBottom: '20px', width: '15%'}}
             InputProps={{readOnly: true}} />
-            <TextField disabled className='add-input' variant="standard" label='dateStartUtc' value={row.dateStartUtc} style={{marginBottom: '20px', width: '15%'}}
+            <TextField disabled className='add-input' variant="standard" label='dateStartUtc' value={createDate(row.dateStartUtc)} style={{marginBottom: '20px', width: '15%'}}
               InputProps={{readOnly: true}} />
-            <TextField disabled className='add-input' variant="standard" label='dateEndUtc' value={row.dateEndUtc} style={{marginBottom: '20px', width: '15%'}}
+            <TextField disabled className='add-input' variant="standard" label='dateEndUtc' value={createDate(row.dateEndUtc)} style={{marginBottom: '20px', width: '15%'}}
               InputProps={{readOnly: true}} />
             <TextField disabled className='add-input' variant="standard" label='role' value={row.role} style={{marginBottom: '20px', width: '15%'}}
               InputProps={{readOnly: true}} />
@@ -65,7 +71,7 @@ export const EditUser = ({editUserVisible, setEditUserVisible, row, setEditableI
           <Box className='modal-inside-line'>
             <TextField className='add-input' label='Введите description' value={newDescription} style={{marginBottom: '20px', width: '15%'}}
               onChange={e => setNewDescription(e.target.value)} />
-            <TextField className='add-input' label='Введите deviceToken' value={newDeviceToken} style={{marginBottom: '20px', width: '15%'}}
+            <TextField className='add-input' label='Введите licenseKey' value={newDeviceToken} style={{marginBottom: '20px', width: '15%'}}
               onChange={(e) => setNewDeviceToken(e.target.value)} />
             <TextField className='add-input' label='Введите numberOfLicenseDays' value={numberOfLicenseDays} style={{marginBottom: '20px', width: '15%'}}
               onChange={(e) => setNumberOfLicenseDays(e.target.value)} type='number'/>

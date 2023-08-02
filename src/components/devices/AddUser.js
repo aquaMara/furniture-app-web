@@ -39,18 +39,19 @@ export const AddUser = ({setAddUserVisible, getUsers}) => {
         description: description, deviceToken: deviceToken};
       await axiosPrivate.post('/Users', addUser)
       .then((res) => {
-        // console.log("handleAddRow", res.data);      
+        setAddUserVisible(false);
+        getUsers();   
       })
-      .catch( (e) => { console.log("handleAddRow error ", e) } );
-      setAddUserVisible(false);
-      getUsers();
+      .catch(e => {
+        alert(JSON.stringify(e.response.data.message));
+      });
     }
 
   return (
     <div className='add-item'>
         <TextField className='add-input' label='Введите name' value={name} required={true} style={{marginBottom: '20px', width: '15%'}}
           onChange={e => setName(e.target.value)} />
-        <TextField className='add-input' label='Введите deviceToken' value={deviceToken} style={{marginBottom: '20px', width: '15%'}}
+        <TextField className='add-input' label='Введите licenseKey' value={deviceToken} style={{marginBottom: '20px', width: '15%'}}
           onChange={e => setDeviceToken(e.target.value)} />
         <TextField className='add-input' label='Введите description' value={description} style={{marginBottom: '20px', width: '15%'}}
           onChange={e => setDescription(e.target.value)} />

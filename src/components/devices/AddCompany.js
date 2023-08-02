@@ -17,10 +17,11 @@ export const AddCompany = ({setAddCompanyVisible}) => {
       }
       await axiosPrivate.post('/Users/Company', newCompany)
       .then((res) => {
-        // console.log("getUsers", res.data);    
+        setAddCompanyVisible(false);
       })
-      .catch( (e) => { console.log("getUsers error ", e) } );
-      setAddCompanyVisible(false);
+      .catch(e => {
+        alert(JSON.stringify(e.response.data.message));
+      });
     }
 
   return (

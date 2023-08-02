@@ -88,7 +88,9 @@ export const MenuJson = () => {
       .then((res) => {
         alert('Sucess');   
       })
-      .catch( (e) => { console.log('handleSaveMaterialJson error', e) } );
+      .catch(e => { 
+        alert(JSON.stringify(e.response.data.message))
+      });
   }
 
   return (

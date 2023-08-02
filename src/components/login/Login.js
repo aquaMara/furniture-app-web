@@ -28,7 +28,6 @@ export const Login = () => {
           navigate('/');
         })
         .catch(e => {
-          // console.log('handleLogin error', e.message, e.response.data.message);
           setErrorMessage(e.response.data.message);
         });
     }

@@ -16,8 +16,7 @@ export const BundleJson = () => {
         {
             bundleName: '',
             bundleUrl: '',
-            hashFileName: '',
-            hashFileUrl: ''
+            hashBundle: ''
         }
     ]);
 
@@ -38,7 +37,7 @@ export const BundleJson = () => {
     const getUsers = async () => {
         await axiosPrivate.get('/Users')
         .then((res) => {
-          setUsers(res.data);      
+          setUsers(res.data);
         })
         .catch( (e) => { console.log("getUsers error ", e) } );
     }
@@ -74,11 +73,8 @@ export const BundleJson = () => {
                 name='bundleUrl' label='Введите bundleUrl' required={true}
                 onChange={e => handleBundleInputChange(e)} value={bundles[0].bundleUrl} />
             <TextField id="standard-basic" variant="standard" className='json-input' style={{width: '50vw'}}
-                name='hashFileName' label='Введите hashFileName' required={true}
-                onChange={e => handleBundleInputChange(e)} value={bundles[0].hashFileName} />
-            <TextField id="standard-basic" variant="standard" className='json-input' style={{width: '50vw'}}
-                name='hashFileUrl' label='Введите hashFileUrl' required={true}
-                onChange={e => handleBundleInputChange(e)} value={bundles[0].hashFileUrl} />
+                name='hashBundle' label='Введите hashBundle' required={true}
+                onChange={e => handleBundleInputChange(e)} value={bundles[0].hashBundle} />
         </div>
      </div>
      <div className='button-container'>
