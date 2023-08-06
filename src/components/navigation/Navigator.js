@@ -13,12 +13,12 @@ export const Navigator = () => {
         </Link>
         <Link to='/material-json' className='nav-link'>
           <Typography variant='h6'>
-            Добавить Material
+            Добавить Catalog
           </Typography>
         </Link>
         <Link to='/menu-json' className='nav-link'>
           <Typography variant='h6'>
-            Добавить Menu
+            Добавить MenuList
           </Typography>
         </Link>
         <Link to='/bundle-json' className='nav-link'>

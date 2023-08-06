@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import useNode from '../../hooks/useNode';
 import { MenuList } from './MenuList';
@@ -38,7 +38,7 @@ export const MenuListJson = () => {
   }
 
   const handleGetTopNode = () => {
-    const structure = getTopNode(menuListData);
+    getTopNode(menuListData);
   }
 
   const handleInsertNode = (folderId, item) => {
@@ -53,7 +53,7 @@ export const MenuListJson = () => {
 
   const handleDeleteNode = (folderId) => {
     const finalStructure = deleteNode(menuListData, folderId);
-    const temp = { ... finalStructure };
+    const temp = { ...finalStructure };
     setMenuListData(temp);
   }
 
@@ -104,11 +104,11 @@ export const MenuListJson = () => {
         </FormControl> }
         <Button className='save-button'
           variant="outlined" onClick={() => preview()}>
-          Превью Menu JSON
+          Превью JSON
         </Button>
         <Button className='save-button' disabled={disabledCondition}
           variant="outlined" onClick={() => handleSaveMenuJson()}>
-          Отправить Menu JSON
+          Отправить JSON
         </Button>
      </div>
     </div>

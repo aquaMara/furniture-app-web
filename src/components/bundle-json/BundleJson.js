@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import '../create-json/CreateJson.css';
 import InputLabel from '@mui/material/InputLabel';
@@ -27,7 +27,6 @@ export const BundleJson = () => {
         const list = [...bundles];
         list[0][name]= value;
         setBundles(list);
-        
     }
 
     useEffect(() => {
@@ -95,11 +94,11 @@ export const BundleJson = () => {
         </FormControl> }
         <Button className='save-button'
           variant="outlined" onClick={() => preview()}>
-          Превью Bundle JSON
+          Превью JSON
         </Button>
         <Button className='save-button' disabled={disabledCondition}
           variant="outlined" onClick={() => handleSaveBundleJson()}>
-          Отправить Bundle JSON
+          Отправить JSON
         </Button>
      </div>
     </div>

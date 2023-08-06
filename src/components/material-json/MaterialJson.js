@@ -43,7 +43,6 @@ export const MaterialJson = () => {
     const handleListInputChange = (e, index, id) => {
         const {name, value}= e.target;
         const arr = [...catalogs];
-        const arr2 = arr[index].list[id];
         arr[index].list[id][name] = value;
         setCatalogs(arr);
     }
@@ -183,11 +182,11 @@ export const MaterialJson = () => {
         </FormControl> }
         <Button className='save-button'
           variant="outlined" onClick={() => preview()}>
-          Превью Material JSON
+          Превью JSON
         </Button>
         <Button className='save-button' disabled={disabledCondition}
           variant="outlined" onClick={() => handleSaveMaterialJson()}>
-          Отправить Material JSON
+          Отправить JSON
         </Button>
      </div>
     </div>

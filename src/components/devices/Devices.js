@@ -42,12 +42,14 @@ export const Devices = () => {
   const getUsers = async () => {
     await axiosPrivate.get('/Users')
     .then((res) => {
-      setRows(res.data);      
+      setRows(res.data);
+      console.log(res.data)     
     })
     .catch( (e) => { console.log("getUsers error ", e) } );
   }
 
   const createDate = (date1) => {
+
     let date = new Date(date1);    
     return date.getFullYear() + '-'+ (date.getMonth() + 1) +'-' + date.getDate();
   }
@@ -165,6 +167,7 @@ export const Devices = () => {
             <td>{row.name}</td>
             <td>{row.description}</td>
             <td>{row.deviceToken}</td>
+            <td>{createDate(row.dateCreatedUtc)}</td>
             <td>{createDate(row.dateStartUtc)}</td>
             <td>{createDate(row.dateEndUtc)}</td>
             <td>{row.role}</td>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, TextField } from '@mui/material';
 import '../create-json/CreateJson.css';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import InputLabel from '@mui/material/InputLabel';
@@ -14,10 +14,13 @@ export const CreateJson = () => {
 
   const [userId, setUserId] = useState('');
   const [users, setUsers] = useState(null);
+  const [licenseKey, setLicenseKey] = useState('');
   const [json, setJson] = useState('');
   const axiosPrivate = useAxiosPrivate();
 
-  const disabledCondition = json === null || json.trim() === ''
+  const getDisabledCondition = licenseKey === null || licenseKey.trim() === '';
+
+  const updateDisabledCondition = json === null || json.trim() === ''
     || userId === null || userId === '';
 
   useEffect(() => {
@@ -30,6 +33,36 @@ export const CreateJson = () => {
       setUsers(res.data);      
     })
     .catch( (e) => { console.log("getUsers error ", e) } );
+  }
+
+  const getMaterial = () => {
+    axiosPrivate.get(`/UserAdministration/Catalog/${licenseKey}`)
+    .then((res) => {
+      setJson(JSON.stringify(res.data));
+    })
+    .catch(e => { 
+      alert(JSON.stringify(e.response.data.message))
+    });
+  }
+
+  const getMenu = () => {
+    axiosPrivate.get(`/UserAdministration/Menu/${licenseKey}`)
+    .then((res) => {
+      setJson(JSON.stringify(res.data));
+    })
+    .catch(e => { 
+      alert(JSON.stringify(e.response.data.message));
+    });
+  }
+
+  const getBundle = () => {
+    axiosPrivate.get(`/UserAdministration/Bundle/${licenseKey}`)
+    .then((res) => {
+      setJson(JSON.stringify(res.data));
+    })
+    .catch(e => { 
+      alert(JSON.stringify(e.response.data.message))
+    });
   }
 
   const handleSaveMaterialJson = async () => {
@@ -69,6 +102,25 @@ export const CreateJson = () => {
   return (
     <div className='json-container'>
       <div className='left-container'>
+        <TextField label='Введите licenseKey' value={licenseKey} required={true}
+          style={{marginBottom: '20px', width: '20vw'}}
+          onChange={e => setLicenseKey(e.target.value)} />
+        <Button className='save-button' disabled={getDisabledCondition}
+          variant="outlined" onClick={() => getMaterial()}>
+          Получить Catalog JSON
+        </Button>
+        <Button className='save-button' disabled={getDisabledCondition}
+          variant="outlined" onClick={() => getMenu()}>
+          Получить MenuList JSON
+        </Button>
+        <Button className='save-button' disabled={getDisabledCondition}
+          variant="outlined" onClick={() => getBundle()}>
+          Получить Bundle JSON
+        </Button>        
+      </div>
+      <TextareaAutosize className='textarea' value={json} minRows={12}
+        onChange={e => setJson(e.target.value)} />
+      <div className='left-container'>
         <Link to='https://thisyogesh.github.io/jsonmaker/' className='website-link'>
           <Typography variant='h6'>
             Перейти на сайт для создания JSON
@@ -89,21 +141,19 @@ export const CreateJson = () => {
           )}
           </Select>
         </FormControl> }
-        <Button className='save-button' disabled={disabledCondition}
+        <Button className='save-button' disabled={updateDisabledCondition}
           variant="outlined" onClick={() => handleSaveMaterialJson()}>
-          Отправить Material JSON
+          Отправить Catalog JSON
         </Button>
-        <Button className='save-button' disabled={disabledCondition}
+        <Button className='save-button' disabled={updateDisabledCondition}
           variant="outlined" onClick={() => handleSaveMenuJson()}>
-          Отправить Menu JSON
+          Отправить MenuList JSON
         </Button>
-        <Button className='save-button' disabled={disabledCondition}
+        <Button className='save-button' disabled={updateDisabledCondition}
           variant="outlined" onClick={() => handleSaveBundleJson()}>
           Отправить Bundle JSON
         </Button>
       </div>
-      <TextareaAutosize className='textarea' value={json} minRows={12}
-        onChange={e => setJson(e.target.value)} />
     </div>
   )
 }
